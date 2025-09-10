@@ -2,41 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* DisciplineDown Dark Fantasy Design System - All colors MUST be HSL */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Dark Fantasy Base Colors */
+    --background: 240 6% 8%;
+    --foreground: 240 5% 96%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Card System with Glassmorphism */
+    --card: 240 6% 12%;
+    --card-foreground: 240 5% 94%;
+    --card-glass: 240 6% 12% / 0.8;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    /* Popover */
+    --popover: 240 6% 10%;
+    --popover-foreground: 240 5% 96%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Fantasy Purple Primary */
+    --primary: 265 85% 65%;
+    --primary-foreground: 240 5% 96%;
+    --primary-glow: 265 85% 75%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Gold Accent System */
+    --secondary: 45 85% 65%;
+    --secondary-foreground: 240 6% 12%;
+    --gold: 45 90% 70%;
+    --gold-dark: 45 75% 55%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted Tones */
+    --muted: 240 6% 15%;
+    --muted-foreground: 240 4% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent Variants */
+    --accent: 265 75% 25%;
+    --accent-foreground: 240 5% 96%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Destructive */
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 240 5% 96%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Borders and Inputs */
+    --border: 240 6% 20%;
+    --input: 240 6% 18%;
+    --ring: 265 85% 65%;
 
-    --radius: 0.5rem;
+    /* Fantasy Gradients */
+    --gradient-fantasy: linear-gradient(135deg, hsl(265 85% 65%), hsl(45 85% 65%));
+    --gradient-dark: linear-gradient(180deg, hsl(240 6% 8%), hsl(240 8% 12%));
+    --gradient-glass: linear-gradient(135deg, hsl(240 6% 12% / 0.8), hsl(265 25% 15% / 0.6));
+
+    /* Shadows and Effects */
+    --shadow-fantasy: 0 10px 30px -10px hsl(265 85% 35% / 0.3);
+    --shadow-glow: 0 0 20px hsl(265 85% 65% / 0.4);
+    --shadow-gold: 0 0 15px hsl(45 85% 65% / 0.3);
+
+    /* Typography */
+    --font-fantasy: 'Cinzel', serif;
+    --font-body: 'Inter', sans-serif;
+
+    /* Animations */
+    --transition-magic: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +128,114 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-body;
+    background: var(--gradient-dark);
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-fantasy);
+  }
+}
+
+@layer components {
+  /* Glass Card Component */
+  .glass-card {
+    @apply bg-card/80 backdrop-blur-md border border-border/50 rounded-xl shadow-2xl;
+    background: var(--gradient-glass);
+    box-shadow: var(--shadow-fantasy);
+  }
+
+  /* Fantasy Button Variants */
+  .btn-fantasy {
+    @apply px-6 py-3 rounded-lg font-medium transition-all duration-300;
+    background: var(--gradient-fantasy);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .btn-fantasy:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow), 0 15px 35px -5px hsl(265 85% 35% / 0.4);
+  }
+
+  .btn-ghost-fantasy {
+    @apply px-4 py-2 rounded-lg border border-primary/30 text-primary hover:bg-primary/10 transition-all duration-300;
+  }
+
+  .btn-ghost-fantasy:hover {
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Gallery Card Hover Effects */
+  .gallery-card {
+    @apply relative overflow-hidden rounded-xl transition-all duration-500 cursor-pointer;
+    background: var(--gradient-glass);
+  }
+
+  .gallery-card:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-fantasy);
+  }
+
+  .gallery-card:hover .gallery-overlay {
+    @apply opacity-100;
+  }
+
+  .gallery-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent 
+           opacity-0 transition-opacity duration-300 flex items-end p-4;
+  }
+
+  /* Story Card Styling */
+  .story-card {
+    @apply p-6 rounded-xl transition-all duration-300 hover:scale-[1.02];
+    background: var(--gradient-glass);
+    box-shadow: var(--shadow-fantasy);
+  }
+
+  .story-card:hover {
+    box-shadow: var(--shadow-fantasy), var(--shadow-glow);
+  }
+
+  /* Pagination Pills */
+  .pagination-pill {
+    @apply px-4 py-2 rounded-full transition-all duration-300 border border-border/30;
+  }
+
+  .pagination-pill.active {
+    background: var(--gradient-fantasy);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .pagination-pill:not(.active):hover {
+    @apply bg-muted/50 border-primary/50;
+  }
+
+  /* Modal Backdrop */
+  .modal-backdrop {
+    @apply fixed inset-0 bg-background/80 backdrop-blur-lg;
+  }
+
+  /* Timer Glow Effect */
+  .timer-glow {
+    @apply text-4xl font-bold;
+    color: hsl(var(--gold));
+    text-shadow: 0 0 20px hsl(var(--gold) / 0.8);
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulse-glow {
+    from {
+      text-shadow: 0 0 20px hsl(var(--gold) / 0.8);
+    }
+    to {
+      text-shadow: 0 0 30px hsl(var(--gold) / 1), 0 0 40px hsl(var(--gold) / 0.6);
+    }
+  }
+
+  /* Navbar Glass Effect */
+  .navbar-glass {
+    @apply fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-border/20;
+    background: hsl(var(--background) / 0.8);
   }
 }
